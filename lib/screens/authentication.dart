@@ -91,7 +91,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           TextFormField(
                             obscureText: true,
                             textCapitalization: TextCapitalization.none,
-                            keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
                             decoration: InputDecoration(
                                 label: Text(
@@ -132,6 +131,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                               onPressed: () {
                                 setState(() {
                                   isLogin = !isLogin;
+                                  _formkey.currentState!.reset();
                                 });
                               },
                               icon: Icon(isLogin
