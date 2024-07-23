@@ -65,17 +65,24 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             textCapitalization: TextCapitalization.none,
                             keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
+                            cursorColor: Colors.white,
+                            style:const  TextStyle(color: Colors.white),
                             decoration: InputDecoration(
+                                icon: Icon(
+                                  Icons.mail_lock_outlined,
+                                  color:
+                                      Theme.of(context).colorScheme.onSecondary,
+                                ),
                                 label: Text(
-                              'Email Address ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary),
-                            )),
+                                  'Email Address ',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary),
+                                )),
                             validator: (value) {
                               if (value == null ||
                                   value.trim().isEmpty ||
@@ -91,18 +98,23 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           TextFormField(
                             obscureText: true,
                             textCapitalization: TextCapitalization.none,
-                            autocorrect: false,
+                            autocorrect: false,style:const  TextStyle(color: Colors.white),
                             decoration: InputDecoration(
+                                icon: Icon(
+                                  Icons.security_outlined,
+                                  color:
+                                      Theme.of(context).colorScheme.onSecondary,
+                                ),
                                 label: Text(
-                              'Password',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary),
-                            )),
+                                  'Password',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary),
+                                )),
                             validator: (value) {
                               if (value == null ||
                                   value.trim().isEmpty ||
