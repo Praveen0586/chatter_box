@@ -91,7 +91,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Chooseprofilepick(),
+                if (!isLogin) const Chooseprofilepick(),
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Form(

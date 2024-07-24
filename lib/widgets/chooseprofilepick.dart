@@ -34,12 +34,12 @@ class _ChooseprofilepickState extends State<Chooseprofilepick> {
       children: [
         GestureDetector(
           onTap: _pickImage,
-          child: CircleAvatar(
+          child: CircleAvatar(  
               foregroundImage: pickedImagefile != null
                   ? FileImage(pickedImagefile!)
                   : const AssetImage('assets/images/profile.png'),
-              radius: 50,
-              child: Icon(Icons.add_a_photo)),
+              radius: 50,backgroundImage: const AssetImage('assets/images/profile.png') ,
+            ),
         )
       ],
     );
