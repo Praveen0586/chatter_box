@@ -34,7 +34,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           print(userCredantials);
         } else {
           final userCredantials = await firebase.createUserWithEmailAndPassword(
-              email: _selectedEmail, password: _selectedPassword);
+            email: _selectedEmail,
+            password: _selectedPassword,
+          );
           print(userCredantials);
         }
       } on FirebaseException catch (error) {
@@ -75,7 +77,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Text('Chatter Box Login ',
+                Text('Chatter Box  ${isLogin ? ' Login ' : ' SignUp'}',
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary,
                         )),
