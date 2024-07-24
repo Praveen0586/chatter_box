@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chatter_box/widgets/chooseprofilepick.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,6 +17,7 @@ class AuthenticationScreen extends StatefulWidget {
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
   String _selectedEmail = '';
   String _selectedPassword = '';
+  File? _selectedimg;
   bool isLogin = true;
   final _formkey = GlobalKey<FormState>();
 
@@ -23,7 +26,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     void _loginorsignup() async {
       final isValid = _formkey.currentState!.validate();
 
-      if (!isValid) {
+      if (!isValid || !isLogin && _selectedimg == null) {
         return;
       }
 
@@ -91,7 +94,12 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                if (!isLogin) const Chooseprofilepick(),
+                if (!isLogin)
+                  Chooseprofilepick(
+                    selectedimg: (selectedImage) {
+                      _selectedimg = selectedImage;
+                    },
+                  ),
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Form(

@@ -6,8 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Chooseprofilepick extends StatefulWidget {
-  const Chooseprofilepick({super.key});
-
+  const Chooseprofilepick({required this.selectedimg, super.key});
+  final void Function(File selectedImage) selectedimg;
   @override
   State<Chooseprofilepick> createState() => _ChooseprofilepickState();
 }
@@ -25,6 +25,7 @@ class _ChooseprofilepickState extends State<Chooseprofilepick> {
       }
       setState(() {
         pickedImagefile = File(selectedImage.path);
+        widget.selectedimg(File(selectedImage.path));
       });
     }
 
@@ -34,12 +35,13 @@ class _ChooseprofilepickState extends State<Chooseprofilepick> {
       children: [
         GestureDetector(
           onTap: _pickImage,
-          child: CircleAvatar(  
-              foregroundImage: pickedImagefile != null
-                  ? FileImage(pickedImagefile!)
-                  : const AssetImage('assets/images/profile.png'),
-              radius: 50,backgroundImage: const AssetImage('assets/images/profile.png') ,
-            ),
+          child: CircleAvatar(
+            foregroundImage: pickedImagefile != null
+                ? FileImage(pickedImagefile!)
+                : const AssetImage('assets/images/profile.png'),
+            radius: 50,
+            backgroundImage: const AssetImage('assets/images/profile.png'),
+          ),
         )
       ],
     );
