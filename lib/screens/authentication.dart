@@ -61,12 +61,18 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Stack(
         children: [
-          Image.network(
-            'https://media.istockphoto.com/id/1314514463/vector/vector-illustration-futuristic-cyber-messenger-concept-smartphone-with-chat-bubbles-and.jpg?s=612x612&w=0&k=20&c=bhWlovsLHjRzawRcSLbSBakd35iAZM58Wy10KKswLVQ=',
+          Image.asset(
+            'assets/images/bglogin.jpg',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
           ),
+          // Image.network(
+          //   'https://media.istockphoto.com/id/1314514463/vector/vector-illustration-futuristic-cyber-messenger-concept-smartphone-with-chat-bubbles-and.jpg?s=612x612&w=0&k=20&c=bhWlovsLHjRzawRcSLbSBakd35iAZM58Wy10KKswLVQ=',
+          //   fit: BoxFit.cover,
+          //   width: double.infinity,
+          //   height: double.infinity,
+          // ),
           Positioned(
               child: Center(
                   child: Card(
@@ -84,7 +90,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         )),
                 const SizedBox(
                   height: 20,
-                ),const Chooseprofilepick(),
+                ),
+                const Chooseprofilepick(),
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Form(
