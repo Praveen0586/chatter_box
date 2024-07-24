@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chatter_box/widgets/chooseprofilepick.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 final firebase = FirebaseAuth.instance;
@@ -20,7 +21,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   File? _selectedimg;
   bool isLogin = true;
   final _formkey = GlobalKey<FormState>();
-
+  bool isAuthenticating = false;
   @override
   Widget build(BuildContext context) {
     void _loginorsignup() async {
@@ -32,6 +33,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
       _formkey.currentState!.save();
       try {
+        setState(() {
+          isAuthenticating = true;
+        });
         if (isLogin) {
           final userCredantials = await firebase.signInWithEmailAndPassword(
               email: _selectedEmail, password: _selectedPassword);
@@ -41,7 +45,16 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             email: _selectedEmail,
             password: _selectedPassword,
           );
-          print(userCredantials);
+
+          final storageref = FirebaseStorage.instance
+              .ref()
+              .child('user_files')
+              .child(
+                  '${userCredantials.user!.uid}.jpg'); //it creates the folder and file directories
+
+          await storageref.putFile(_selectedimg!);
+          final downloadURL = await storageref.getDownloadURL();
+          print(downloadURL);
         }
       } on FirebaseException catch (error) {
         if (error.code == 'invalid-email') {
@@ -57,6 +70,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             content: Text(error.message ?? 'Authentication Failed'),
           ),
         );
+        setState(() {
+          isAuthenticating = false;
+        });
       }
     }
 
