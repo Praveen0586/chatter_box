@@ -27,47 +27,30 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       }
 
       _formkey.currentState!.save();
-
-      if (isLogin) {
-        try {
+      try {
+        if (isLogin) {
           final userCredantials = await firebase.signInWithEmailAndPassword(
               email: _selectedEmail, password: _selectedPassword);
           print(userCredantials);
-        } on FirebaseException catch (error) {
-          if (error.code == 'invalid-email') {
-            //
-          }
-          if (!context.mounted) {
-            return;
-          }
-          print('show the error');
-          ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(error.message ?? 'Authentication Failed'),
-            ),
-          );
-        }
-      } else {
-        try {
+        } else {
           final userCredantials = await firebase.createUserWithEmailAndPassword(
               email: _selectedEmail, password: _selectedPassword);
           print(userCredantials);
-        } on FirebaseException catch (error) {
-          if (error.code == 'invalid-email') {
-            //
-          }
-          if (!context.mounted) {
-            return;
-          }
-          print('show the error');
-          ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(error.message ?? 'Authentication Failed'),
-            ),
-          );
         }
+      } on FirebaseException catch (error) {
+        if (error.code == 'invalid-email') {
+          //
+        }
+        if (!context.mounted) {
+          return;
+        }
+        print('show the error');
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(error.message ?? 'Authentication Failed'),
+          ),
+        );
       }
     }
 
