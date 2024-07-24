@@ -40,7 +40,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           if (error.code == 'invalid-email') {
             //
           }
-
+          if (!context.mounted) {
+            return;
+          }
           print('show the error');
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(
