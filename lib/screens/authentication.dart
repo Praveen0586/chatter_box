@@ -1,3 +1,4 @@
+import 'package:chatter_box/widgets/chooseprofilepick.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         )),
                 const SizedBox(
                   height: 20,
-                ),
+                ),const Chooseprofilepick(),
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: Form(
