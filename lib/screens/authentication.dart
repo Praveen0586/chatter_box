@@ -77,7 +77,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Text('Chatter Box  ${isLogin ? ' Login ' : ' SignUp'}',
+                Text('Chatter Box  ${isLogin ? ' LogIn ' : ' SignUp'}',
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary,
                         )),
