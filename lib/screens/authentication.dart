@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+final firebase = FirebaseAuth.instance;
 
 class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({super.key});
@@ -14,18 +18,40 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   bool isLogin = true;
   final _formkey = GlobalKey<FormState>();
 
-  void _loginorsignup() {
-    final isValid = _formkey.currentState!.validate();
-
-    if (isValid) {
-      _formkey.currentState!.save();
-      print(_selectedEmail);
-      print(_selectedPassword);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    void _loginorsignup() async {
+      final isValid = _formkey.currentState!.validate();
+
+      if (!isValid) {
+        return;
+      }
+
+      _formkey.currentState!.save();
+
+      if (isLogin) {
+        ////.....
+      } else {
+        try {
+          final userCredantials = await firebase.createUserWithEmailAndPassword(
+              email: _selectedEmail, password: _selectedPassword);
+          print(userCredantials);
+        } on FirebaseException catch (error) {
+          if (error.code == 'invalid-email') {
+            //
+          }
+
+          print('show the error');
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(error.message ?? 'Authentication Failed'),
+            ),
+          );
+        }
+      }
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Stack(
@@ -66,7 +92,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             keyboardType: TextInputType.emailAddress,
                             autocorrect: false,
                             cursorColor: Colors.white,
-                            style:const  TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 icon: Icon(
                                   Icons.mail_lock_outlined,
@@ -98,7 +124,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           TextFormField(
                             obscureText: true,
                             textCapitalization: TextCapitalization.none,
-                            autocorrect: false,style:const  TextStyle(color: Colors.white),
+                            autocorrect: false,
+                            style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 icon: Icon(
                                   Icons.security_outlined,
