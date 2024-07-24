@@ -193,31 +193,40 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           const SizedBox(
                             height: 50,
                           ),
-                          ElevatedButton.icon(
-                              onPressed: _loginorsignup,
-                              icon: Icon(isLogin
-                                  ? Icons.lightbulb_outline
-                                  : Icons.bubble_chart_outlined),
-                              label: Text(isLogin ? 'LogIn' : 'SignIn')),
+                          if (isAuthenticating)
+                            const SizedBox(
+                              width: double.infinity,
+                              height: 100,
+                              child: Center(child: CircularProgressIndicator()),
+                            ),
+                          if (!isAuthenticating)
+                            ElevatedButton.icon(
+                                onPressed: _loginorsignup,
+                                icon: Icon(isLogin
+                                    ? Icons.lightbulb_outline
+                                    : Icons.bubble_chart_outlined),
+                                label: Text(isLogin ? 'LogIn' : 'SignIn')),
                           const SizedBox(
                             height: 20,
                           ),
-                          TextButton.icon(
-                              onPressed: () {
-                                setState(() {
-                                  isLogin = !isLogin;
-                                  _formkey.currentState!.reset();
-                                });
-                              },
-                              icon: Icon(isLogin
-                                  ? Icons.bubble_chart_outlined
-                                  : Icons.lightbulb_outline),
-                              label: Text(isLogin
-                                  ? 'Create a New Account'
-                                  : 'Login with your Account'),
-                              style: TextButton.styleFrom(
-                                  foregroundColor:
-                                      Theme.of(context).colorScheme.onPrimary))
+                          if (!isAuthenticating)
+                            TextButton.icon(
+                                onPressed: () {
+                                  setState(() {
+                                    isLogin = !isLogin;
+                                    _formkey.currentState!.reset();
+                                  });
+                                },
+                                icon: Icon(isLogin
+                                    ? Icons.bubble_chart_outlined
+                                    : Icons.lightbulb_outline),
+                                label: Text(isLogin
+                                    ? 'Create a New Account'
+                                    : 'Login with your Account'),
+                                style: TextButton.styleFrom(
+                                    foregroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary))
                         ],
                       )),
                 )
