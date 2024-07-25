@@ -21,6 +21,8 @@ class _NewMessageState extends State<NewMessage> {
         return;
       }
       messageController.clear();
+    //  FocusScope.of(context).unfocus();
+//this code closes the keyboard when its triggered 
       final currentuser = FirebaseAuth.instance.currentUser;
       final user = await FirebaseFirestore.instance
           .collection('user')
@@ -33,6 +35,7 @@ class _NewMessageState extends State<NewMessage> {
         'username': user.data()!['username'],
         'userimg': user.data()!['user_Image']
       });
+
       print(enteredText);
     }
 
