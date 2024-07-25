@@ -1,5 +1,9 @@
+import 'package:chatter_box/widgets/chatbubblesown.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+final currentuser = FirebaseAuth.instance.currentUser!.uid;
 
 class Chatmessages extends StatelessWidget {
   const Chatmessages({super.key});
@@ -26,9 +30,29 @@ class Chatmessages extends StatelessWidget {
               itemCount: chatdata.length,
               reverse: true,
               itemBuilder: (ctx, index) {
+                final currentmessage = chatdata[index].data();
+                final istherenextmessage = index + 1 < chatdata.length
+                    ? chatdata[index + 1].data()
+                    : null;
 
-                
-                return Text('${chatdata[index].data()['message']}');
+                final currentmessageuserid = currentmessage['user_id'];
+                final nextmessageuserid = istherenextmessage != null
+                    ? istherenextmessage['user_id']
+                    : null;
+
+                if (currentmessageuserid == nextmessageuserid) {
+                  ChatscreenBubbles.follow(
+                      message: currentmessage['message'],
+                      isme: currentuser == currentmessageuserid);
+                } else {
+                  ChatscreenBubbles.first(
+                      uername: currentmessage['username'],
+                      image: currentmessage['userimg'],
+                      message: currentmessage['message'],
+                      isme: currentuser == currentmessageuserid);
+                }
+
+                //Text('${chatdata[index].data()['message']}');
               });
         });
   }
