@@ -24,9 +24,9 @@ class Chatmessages extends StatelessWidget {
 
           return ListView.builder(
               itemCount: chatdata.length,
-              reverse: false,
+              reverse: true,
               itemBuilder: (ctx, index) {
-                return Text(chatdata[index].data()['message']);
+                return Text('${chatdata[index].data()['message']}');
               });
         });
   }
