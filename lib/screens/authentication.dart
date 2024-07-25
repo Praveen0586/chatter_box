@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:chatter_box/widgets/chooseprofilepick.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +23,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   bool isLogin = true;
   final _formkey = GlobalKey<FormState>();
   bool isAuthenticating = false;
+
   @override
   Widget build(BuildContext context) {
     void _loginorsignup() async {
@@ -49,13 +50,22 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
           final storageref = FirebaseStorage.instance
               .ref()
-              .child('user_files')
+              .child('userfiles')
               .child(
                   '${userCredantials.user!.uid}.jpg'); //it creates the folder and file directories
 
           await storageref.putFile(_selectedimg!);
           final downloadURL = await storageref.getDownloadURL();
           print(downloadURL);
+
+          await FirebaseFirestore.instance
+              .collection('user')
+              .doc(userCredantials.user!.uid)
+              .set({
+            'username': _selectedusername,
+            'user_Image': downloadURL,
+            'email': _selectedEmail
+          });
         }
       } on FirebaseException catch (error) {
         if (error.code == 'invalid-email') {
@@ -64,7 +74,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         if (!context.mounted) {
           return;
         }
-        print('show the error');
+        print('some error occur 11111111111111111111111');
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
