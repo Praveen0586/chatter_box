@@ -26,6 +26,8 @@ class Chatmessages extends StatelessWidget {
               itemCount: chatdata.length,
               reverse: true,
               itemBuilder: (ctx, index) {
+
+                
                 return Text('${chatdata[index].data()['message']}');
               });
         });
