@@ -18,6 +18,7 @@ class AuthenticationScreen extends StatefulWidget {
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
   String _selectedEmail = '';
   String _selectedPassword = '';
+  String _selectedusername = '';
   File? _selectedimg;
   bool isLogin = true;
   final _formkey = GlobalKey<FormState>();
@@ -123,6 +124,39 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if (!isLogin)
+                            TextFormField(
+                              autocorrect: false,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                  icon: Icon(
+                                    Icons.person_pin_circle_outlined,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                  ),
+                                  label: Text(
+                                    'UserName',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary),
+                                  )),
+                              validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    value.trim().length < 4) {
+                                  return 'Please enter a Valid Username ';
+                                }
+                                return null;
+                              },
+                              onSaved: (newValue) {
+                                _selectedusername = newValue!;
+                              },
+                            ),
                           TextFormField(
                             textCapitalization: TextCapitalization.none,
                             keyboardType: TextInputType.emailAddress,
