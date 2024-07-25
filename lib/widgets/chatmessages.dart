@@ -41,11 +41,11 @@ class Chatmessages extends StatelessWidget {
                     : null;
 
                 if (currentmessageuserid == nextmessageuserid) {
-                  ChatscreenBubbles.follow(
+                  return ChatscreenBubbles.follow(
                       message: currentmessage['message'],
                       isme: currentuser == currentmessageuserid);
                 } else {
-                  ChatscreenBubbles.first(
+                  return ChatscreenBubbles.first(
                       uername: currentmessage['username'],
                       image: currentmessage['userimg'],
                       message: currentmessage['message'],
